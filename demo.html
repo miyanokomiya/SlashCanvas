@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+
+		<script type="text/javascript" src="./dest/SlashCanvas.js"></script>
+	</head>
+	<body>
+		<div id="main"></div>
+		<div id="sub"></div>
+		
+		<script>
+		// 第一引数にタグのID、第二引数にオプション(省略可)を設定してインスタンス作成
+		new SlashCanvas("main", {
+			image : "./resouce/game.png",				// 画像ソース
+			width : 400,								// フィールド幅
+			height : 400,								// フィールド高さ
+			gravityX : 0,								// 横重力
+			gravityY : 0,								// 縦重力
+			blockScale : 0.8,							// フィールドに対するブロックスケール
+			sound : "./resouce/katana-gesture1.wav"		// 斬撃サウンドソース
+		});
+
+		new SlashCanvas("sub", {
+			image : "./resouce/OkadaSpace.JPG",
+			width : 400,
+			height : 600,
+			gravityX : 1,
+			sound : "./resouce/katana-gesture1.wav"
+		});
+		</script
+	</body>
+</html>
