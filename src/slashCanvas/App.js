@@ -408,30 +408,34 @@ define(function(require) {
 
 		$(target).on("mouseup mouseleave touchend touchcancel", function(e) {
 			if (slash.length > 1) {
-				if (self.sound) {
-					self.sound.play();
-				}
-
-				// 分割情報
-				var info = matterUtil.SplitBodies(self.blockList, slash[0], slash[1]);
-
-				// ボディリセット
-				self.resetBodies();
-
-				// 作り直し
-				self.blockList = info.stay.concat(info.add);
-				World.add(self.engine.world, self.blockList);
-
-				// スラッシュ線として記録
+				// 長さチェック
 				var vec = geoUtil.VecSub(slash[0], slash[1]);
-				var scale = length / geoUtil.Length({x:0,y:0}, vec);
-				vec = geoUtil.VecMult(vec, scale);
+				var slashLength = geoUtil.Length({x:0,y:0}, vec);
+				if (slashLength > 5) {
+					if (self.sound) {
+						self.sound.play();
+					}
 
-				// 外接円の半径分拡大
-				var p1 = geoUtil.VecSub(slash[0], vec);
-				var p2 = geoUtil.VecAdd(slash[1], vec);
+					// 分割情報
+					var info = matterUtil.SplitBodies(self.blockList, slash[0], slash[1]);
 
-				self.slashLineList.push({s : p1, e : p2, life : 60});
+					// ボディリセット
+					self.resetBodies();
+
+					// 作り直し
+					self.blockList = info.stay.concat(info.add);
+					World.add(self.engine.world, self.blockList);
+
+					// スラッシュ線として記録
+					var scale = length / slashLength;
+					vec = geoUtil.VecMult(vec, scale);
+
+					// 外接円の半径分拡大
+					var p1 = geoUtil.VecSub(slash[0], vec);
+					var p2 = geoUtil.VecAdd(slash[1], vec);
+
+					self.slashLineList.push({s : p1, e : p2, life : 60});
+				}
 			}
 
 			slash.length = 0;
